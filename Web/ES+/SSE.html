@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSE Demo</title>
+  </head>
+  <body>
+    <h3>See Console</h3>
+
+    <script>
+      // 初始化，参数为 URL
+      // 如果不手动 close 会自动重连
+      var evtSource = new EventSource('flux');
+
+      // 监听消息
+      evtSource.onmessage = function (e) {
+        console.log('message: ' + e.data);
+      };
+
+      // 监听指定类型
+      // 后端在消息第一行写入标识：event:my\n
+      evtSource.addEventListener('my', function (e) {
+        console.log('my: ' + e.data);
+      });
+    </script>
+  </body>
+</html>
